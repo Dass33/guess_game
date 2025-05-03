@@ -7,8 +7,6 @@ interface GameState {
     setEndGame: Function,
     round: number,
     setRound: Function,
-    gameMode: string,
-    setGameMode: Function,
     showLandingSite: boolean,
     setShowLandingSite: Function,
     showInstructions: boolean,
@@ -25,7 +23,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [showWelcomeSite, setShowWelcomeSite] = useState(true);
     const [endGame, setEndGame] = useState(false);
     const [round, setRound] = useState(1);
-    const [gameMode, setGameMode] = useState('');
     const [showLandingSite, setShowLandingSite] = useState(true);
     const [showInstructions, setShowInstructions] = useState(false);
     const [showPickNames, setShowPickNames] = useState(false);
@@ -36,7 +33,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
             showWelcomeSite, setShowWelcomeSite,
             endGame, setEndGame,
             round, setRound,
-            gameMode, setGameMode,
             showLandingSite, setShowLandingSite,
             showInstructions, setShowInstructions,
             showPickNames, setShowPickNames,

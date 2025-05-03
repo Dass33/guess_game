@@ -25,7 +25,8 @@ interface config {
     textTutorialHead: string;
     textPickTheme: string;
     buttonNextRound: string;
-    textPickRandom: string;
+    textPickAll: string;
+    textClearAll: string;
     soundJingle: string;
     soundButtonClick: string;
     soundQuestionClick: string;
@@ -66,22 +67,28 @@ interface config {
     prettyURL: string;
 }
 
-export interface editions {
+interface edition {
     editionTitle: string,
     editionSlug: string,
     editionCategories: string[],
 }
 
-interface questions {
+interface question {
     question: string,
     categories: string,
     answers: [string, string, string, string, string],
 }
 
+interface treshold {
+    thresholdValue: number,
+    thresholdTexts: string,
+}
+
 interface GameLoopState {
     configData: config,
-    editionsData: editions[],
-    questionsData: questions[],
+    editionsData: edition[],
+    tresholdData: treshold[]
+    questionsData: question[],
     showSite: number,
     setShowSite: Function,
     numberOfSites: number,
@@ -95,6 +102,8 @@ interface GameLoopState {
     setTutorial: Function,
     playerData: [Player, Player],
     setPlayerData: Function,
+    selectedEditions: string[],
+    setSelectedEditions: Function,
 }
 
 interface Player {
@@ -132,7 +141,8 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     const [configData] = useJson(0);
     const [editionsData] = useJson(1);
-    const [questionsData] = useJson(2);
+    const [tresholdData] = useJson(2);
+    const [questionsData] = useJson(3);
     const [showSite, setShowSite] = useState(0);
     const numberOfSites = 1;
     const [nextRound, setNextRound] = useState(false);
@@ -141,11 +151,13 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [roundStart, setRoundStart] = useState(true);
     const [tutorial, setTutorial] = useState(hideTutorial ? false : true);
     const [playerData, setPlayerData] = useState<[Player, Player]>([{ name: "", points: 0, }, { name: "", points: 0, }]);
+    const [selectedEditions, setSelectedEditions] = useState<string[]>([]);
 
     return (
         <GameLoopContext.Provider value={{
             configData,
             editionsData,
+            tresholdData,
             questionsData,
             showSite, setShowSite,
             numberOfSites,
@@ -154,7 +166,8 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             figmaColors,
             roundStart, setRoundStart,
             tutorial, setTutorial,
-            playerData, setPlayerData
+            playerData, setPlayerData,
+            selectedEditions, setSelectedEditions,
         }}>
             {children}
         </GameLoopContext.Provider>

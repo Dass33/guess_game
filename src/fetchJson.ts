@@ -18,10 +18,11 @@ export async function getJsObjects() {
 
     const config = JSON.parse(lines[0]);
     const editions = JSON.parse(lines[1]);
-    const questions = JSON.parse(lines[2]);
+    const tresholds = JSON.parse(lines[2]);
+    const questions = lines.slice(3).map(line => JSON.parse(line));
 
     // Cache the data
-    cachedData = [config, editions, questions];
+    cachedData = [config, editions, tresholds, questions];
 
     // Return the fetched data
     return cachedData;
