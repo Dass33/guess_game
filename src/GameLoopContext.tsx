@@ -3,6 +3,7 @@ import { getJsObjects } from "./fetchJson";
 
 interface config {
     textPlay: string;
+    roundsAmount: number;
     copyright: string;
     playerADefault: string;
     playerBDefault: string;
@@ -89,11 +90,6 @@ interface GameLoopState {
     editionsData: edition[],
     tresholdData: treshold[]
     questionsData: question[],
-    showSite: number,
-    setShowSite: Function,
-    numberOfSites: number,
-    nextRound: boolean,
-    setNextRound: Function,
     isInitialized: MutableRefObject<boolean>,
     figmaColors: string[],
     roundStart: boolean,
@@ -104,6 +100,25 @@ interface GameLoopState {
     setPlayerData: Function,
     selectedEditions: string[],
     setSelectedEditions: Function,
+    selectedQuestions: question[],
+    setSelectedQuestions: Function,
+    roundsCount: number,
+    setRoundsCount: Function,
+    showQuestion: boolean,
+    setShowQuestion: Function,
+    showswitchPlayers: boolean,
+    setShowSwitchPlayers: Function,
+    showRoundEnd: boolean,
+    setShowRoundEnd: Function,
+    AAnswers: boolean,
+    setAAnswers: Function,
+    BAnswers: boolean,
+    setBAnswers: Function,
+    firstQuestion: boolean,
+    setFirstQuestion: Function,
+    secondQuestion: boolean,
+    setSecondQuestion: Function,
+
 }
 
 interface Player {
@@ -143,15 +158,21 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [editionsData] = useJson(1);
     const [tresholdData] = useJson(2);
     const [questionsData] = useJson(3);
-    const [showSite, setShowSite] = useState(0);
-    const numberOfSites = 1;
-    const [nextRound, setNextRound] = useState(false);
     const isInitialized = useRef(false);
     const figmaColors = ['figma-black', 'figma-pool', 'figma-pool-40', 'figma-lavender-40'];
     const [roundStart, setRoundStart] = useState(true);
     const [tutorial, setTutorial] = useState(hideTutorial ? false : true);
     const [playerData, setPlayerData] = useState<[Player, Player]>([{ name: "", points: 0, }, { name: "", points: 0, }]);
     const [selectedEditions, setSelectedEditions] = useState<string[]>([]);
+    const [selectedQuestions, setSelectedQuestions] = useState<question[]>([]);
+    const [roundsCount, setRoundsCount] = useState(0);
+    const [showQuestion, setShowQuestion] = useState(false);
+    const [showswitchPlayers, setShowSwitchPlayers] = useState(false);
+    const [showRoundEnd, setShowRoundEnd] = useState(false);
+    const [AAnswers, setAAnswers] = useState(true);
+    const [BAnswers, setBAnswers] = useState(false);
+    const [firstQuestion, setFirstQuestion] = useState(true);
+    const [secondQuestion, setSecondQuestion] = useState(false);
 
     return (
         <GameLoopContext.Provider value={{
@@ -159,15 +180,21 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             editionsData,
             tresholdData,
             questionsData,
-            showSite, setShowSite,
-            numberOfSites,
-            nextRound, setNextRound,
             isInitialized,
             figmaColors,
             roundStart, setRoundStart,
             tutorial, setTutorial,
             playerData, setPlayerData,
             selectedEditions, setSelectedEditions,
+            selectedQuestions, setSelectedQuestions,
+            roundsCount, setRoundsCount,
+            showQuestion, setShowQuestion,
+            showswitchPlayers, setShowSwitchPlayers,
+            showRoundEnd, setShowRoundEnd,
+            AAnswers, setAAnswers,
+            BAnswers, setBAnswers,
+            firstQuestion, setFirstQuestion,
+            secondQuestion, setSecondQuestion,
         }}>
             {children}
         </GameLoopContext.Provider>

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useGame } from "./GameContext";
 import { useGameLoop } from "./GameLoopContext";
+import { useItemTooltip } from "@mui/x-charts";
 
 function LandingSite() {
     const { setShowLandingSite, setShowInstructions } = useGame();
@@ -79,11 +80,11 @@ function InstructionSite() {
 }
 
 function PickNames() {
-    const { setShowPickNames, setshowPickEditions,
-        setShowWelcomeSite } = useGame();
+    const { setShowPickNames, setshowPickEditions } = useGame();
     const { configData, editionsData, setPlayerData, selectedEditions } = useGameLoop();
     const playerARef = useRef<HTMLInputElement>(null);
     const playerBRef = useRef<HTMLInputElement>(null);
+    const prepGame = usePrepGame();
 
     if (!editionsData || !configData) {
         return (
@@ -128,7 +129,7 @@ function PickNames() {
                         const playerBName = playerBRef.current?.value || configData.playerBDefault;
                         setPlayerData([{ name: playerAName, points: 0 }, { name: playerBName, points: 0 }])
                         setShowPickNames(false);
-                        selectedEditions?.length || 0 > 0 ? setShowWelcomeSite(false) : setshowPickEditions(true)
+                        selectedEditions?.length || 0 > 0 ? prepGame() : setshowPickEditions(true)
                     }}>
                     {"->"} {configData.buttonNext}
                 </button>
@@ -138,8 +139,9 @@ function PickNames() {
 }
 
 function PickEditions() {
-    const { setshowPickEditions, setShowWelcomeSite } = useGame();
+    const { setshowPickEditions } = useGame();
     const { configData, editionsData, selectedEditions, setSelectedEditions } = useGameLoop();
+    const prepGame = usePrepGame();
 
     if (!editionsData || !configData) {
         return (
@@ -159,7 +161,7 @@ function PickEditions() {
                 {editionsData
                     .map(item => {
                         return (
-                            <button
+                            <button key={item.editionSlug}
                                 className={`rounded-lg border-figma-black border-2 transition-transform duration-200
                                         ${selectedEditions.includes(item.editionSlug)
                                         ? "bg-figma-black text-white scale-110"
@@ -193,7 +195,7 @@ function PickEditions() {
                 <button className="block mx-auto text-2xl bg-figma-black rounded-full py-2 px-7 font-bold hover:scale-110 duration-200"
                     onClick={() => {
                         setshowPickEditions(false);
-                        setShowWelcomeSite(false);
+                        prepGame();
                     }}>
                     {"->"} {configData.buttonNext}
                 </button>
@@ -202,10 +204,30 @@ function PickEditions() {
     );;
 }
 
+function usePrepGame() {
+    const { setShowWelcomeSite } = useGame();
+    const { questionsData, selectedEditions, setSelectedQuestions,
+        configData, setRoundsCount } = useGameLoop();
+
+    return () => {
+        const filteredQuestions = selectedEditions.length === 0
+            ? questionsData
+            : questionsData.filter(item =>
+                selectedEditions.includes(item.categories[0]))
+
+        const shuffledQuestions = filteredQuestions.sort(() => Math.random() - 0.5);
+        setSelectedQuestions(shuffledQuestions);
+        configData.roundsAmount > shuffledQuestions.length
+            ? setRoundsCount(shuffledQuestions.length)
+            : setRoundsCount(configData.roundsAmount);
+        setShowWelcomeSite(false);
+    }
+}
+
 function WelcomeSite() {
     const { showLandingSite, showInstructions,
         showPickEditions, showPickNames } = useGame();
-    const { editionsData, setSelectedEditions } = useGameLoop();
+    const { editionsData, setSelectedEditions, } = useGameLoop();
     const urlParams = new URLSearchParams(window.location.search);
 
     useEffect(() => {
@@ -218,6 +240,9 @@ function WelcomeSite() {
             if (matchedEdition) {
                 setSelectedEditions(matchedEdition.editionTitle);
             }
+            // else {
+            //     const filtered_questions = questionsData.filter(item => item.)
+            // }
         }
     }, [editionsData]);
 
