@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useGame } from "./GameContext";
 import { useGameLoop } from "./GameLoopContext";
+import smiley_face from "../src/assets/smiley_face.svg"
+import cross from "../src/assets/cross.svg"
 
 
 function NewRound() {
@@ -37,26 +39,82 @@ function NewRound() {
 }
 
 function RoundEnd() {
-    const { round } = useGame();
-    const { roundsCount, configData,
-        playerData, setRoundStart } = useGameLoop();
+    const { setRound, round } = useGame();
+    const { configData, setShowRoundEnd, setPlayerData,
+        playerData, setRoundStart, currRoundAnswers, setCurrRoundAnswers } = useGameLoop();
+
+    const [a_ans, a_tip, b_ans, b_tip] = currRoundAnswers;
+    console.log(a_ans, a_tip, b_ans, b_tip);
+    const correctAnswers = Number(a_tip === b_ans) + Number(a_ans === b_tip);
+    let resultMessage = "";
+    switch (correctAnswers) {
+        case 2:
+            resultMessage = configData.resultBothSuccess;
+            break;
+        case 1: resultMessage = configData.resultOneFail;
+            break;
+        case 0: resultMessage = configData.resultBothFail;
+            break;
+    }
 
     return (
-        <div className="flex flex-col justify-between min-h-screen text-figma-black bg-figma-lavender-40">
-            <div className="lg:mt-40 mt-28">
-                <h1 className="text-[5.16rem] text-center font-bold text-figma-black relative z-10">{round}/{roundsCount}</h1>
-                <div className="mx-auto w-[5.5rem] py-1 bg-figma-white rounded-full mt-12">
-                    <p className="text-center font-bold text-[3.25rem] mx-auto">A</p>
-                </div>
-                <p className="text-center mt-16 text-figma-black font-bold text-2xl">
-                    {configData.nowPlay} {playerData[0].name}
+        <div className="flex flex-col justify-between min-h-screen text-figma-black bg-white">
+            <div className="lg:mt-10 mt-8">
+                <p className="text-center mt-16 text-figma-black font-bold text-2xl px-3">
+                    {resultMessage}
                 </p>
+                <div className="flex mt-16 items-start">
+                    <div className="mx-auto max-w-32">
+                        <div className="mx-auto w-[3rem] py-1 bg-figma-lavender-40 rounded-full">
+                            <p className="text-center font-bold text-[1.62rem] mx-auto">A</p>
+                        </div>
+                        <p className="text-center mx-auto my-3 font-bold text-xs">{configData.textAnswer}</p>
+                        <p className="font-bold text-center h-20">{a_ans}</p>
+                        <p className="text-center mx-auto mt-4 mb-8 font-bold text-xs">{configData.textGuessA}</p>
+                        {a_tip === b_ans ?
+                            <img className="mx-auto mt-12" src={smiley_face} alt="smiley face" />
+                            :
+                            <div className="h-20 w-28 flex items-center justify-center text-figma-stone-40 text-center relative px-4">
+                                <p className="font-bold mx-auto">{a_tip}</p>
+                                <img className="absolute top-1/2 transform -translate-y-1/2"
+                                    src={cross} alt="cross" />
+                            </div>
+                        }
+                    </div>
+                    <div className="mx-auto max-w-32">
+                        <div className="mx-auto w-[3rem] py-1 bg-figma-pool-40 rounded-full">
+                            <p className="text-center font-bold text-[1.62rem] mx-auto">B</p>
+                        </div>
+                        <p className="text-center mx-auto my-3 font-bold text-xs">{configData.textAnswer}</p>
+                        <p className="font-bold text-center h-20">{b_ans}</p>
+                        <p className="text-center mx-auto mt-4 mb-8 font-bold text-xs">{configData.textGuessB}</p>
+                        {a_ans === b_tip ?
+                            <img className="mx-auto mt-12" src={smiley_face} alt="smiley face" />
+                            :
+                            <div className="h-20 w-28 items-center flex text-figma-stone-40 text-center relative">
+                                <p className="font-bold mx-auto absolute">{b_tip}</p>
+                                <img className="absolute top-1/2 transform size-40 -translate-y-1/2"
+                                    src={cross} alt="cross" />
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
 
 
-            <div className="relative z-10 text-figma-white mb-16">
+            <div className="relative z-10 text-figma-white my-16">
                 <button className="block mx-auto text-2xl bg-figma-black rounded-full py-2 px-7 font-bold hover:scale-110 duration-200"
-                    onClick={() => { setRoundStart(false); }}>
+                    onClick={() => {
+                        setRoundStart(true);
+                        setShowRoundEnd(false);
+                        setRound(round + 1);
+                        const player1 = playerData[0];
+                        const player2 = playerData[1];
+                        player1.points += Number(a_tip == b_ans);
+                        player2.points += Number(a_ans == b_tip);
+                        setPlayerData([player1, player2]);
+                        setCurrRoundAnswers([]);
+                    }}>
                     {"->"} {configData.buttonNextRound}
                 </button>
             </div>
@@ -66,25 +124,40 @@ function RoundEnd() {
 
 function SwitchPlayers() {
     const { } = useGame();
-    const { configData,
-        playerData, setRoundStart } = useGameLoop();
+    const { configData, setShowSwitchPlayers,
+        playerData, setShowQuestion } = useGameLoop();
 
     return (
-        <div className="flex flex-col justify-between min-h-screen text-figma-black bg-figma-lavender-40">
-            <div className="lg:mt-40 mt-28">
-                <h1 className="text-[5.16rem] text-center font-bold text-figma-black relative z-10">HELLO</h1>
-                <div className="mx-auto w-[5.5rem] py-1 bg-figma-white rounded-full mt-12">
-                    <p className="text-center font-bold text-[3.25rem] mx-auto">A</p>
+        <div className="flex flex-col justify-between min-h-screen text-figma-black
+            bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
+            <div className="lg:mt-40 mt-32">
+                <div className="flex mt-12 items-center">
+                    <div className="mx-auto">
+                        <p className="text-center mx-auto mb-2 font-bold">{playerData[0].name}</p>
+                        <div className="mx-auto w-[5.5rem] py-1 bg-figma-white rounded-full">
+                            <p className="text-center font-bold text-[3.25rem] mx-auto">A</p>
+                        </div>
+                    </div>
+                    <span className="text-5xl font-bold mt-7">{"->"}</span>
+                    <div className="mx-auto">
+                        <p className="text-center mx-auto mb-2 font-bold">{playerData[1].name}</p>
+                        <div className="mx-auto w-[5.5rem] py-1 bg-figma-white rounded-full">
+                            <p className="text-center font-bold text-[3.25rem] mx-auto">B</p>
+                        </div>
+                    </div>
                 </div>
                 <p className="text-center mt-16 text-figma-black font-bold text-2xl">
-                    {configData.nowPlay} {playerData[0].name}
+                    {configData.passDevice}
                 </p>
             </div>
 
 
             <div className="relative z-10 text-figma-white mb-16">
                 <button className="block mx-auto text-2xl bg-figma-black rounded-full py-2 px-7 font-bold hover:scale-110 duration-200"
-                    onClick={() => { setRoundStart(false); }}>
+                    onClick={() => {
+                        setShowQuestion(true);
+                        setShowSwitchPlayers(false);
+                    }}>
                     {"->"} {configData.buttonNext}
                 </button>
             </div>
@@ -94,35 +167,83 @@ function SwitchPlayers() {
 
 function Question() {
     const { round } = useGame();
-    const { roundsCount, configData,
-        selectedQuestions, setShowRoundEnd,
-        AAnswers, BAnswers,
+    const { configData, selectedQuestions,
+        setShowRoundEnd,
+        AAnswers,
         setAAnswers,
         firstQuestion,
         setFirstQuestion,
         setShowQuestion,
         setShowSwitchPlayers,
+        playerData,
+        setCurrRoundAnswers, currRoundAnswers,
     } = useGameLoop();
-    const bgColor = (AAnswers && firstQuestion) || (BAnswers && !firstQuestion)
+    const [selectedAnswer, setSelectedAnswer] = useState("");
+    const bgColor = (AAnswers && firstQuestion) || (!AAnswers && !firstQuestion)
         ? "bg-figma-lavender-40"
         : "bg-figma-pool-40";
 
+    const currQuestion = selectedQuestions[round];
+
     return (
         <div className={`flex flex-col justify-between min-h-screen text-figma-black ${bgColor}`}>
-            <div className="lg:mt-40 mt-28">
-                <h1 className="text-[5.16rem] text-center font-bold text-figma-black relative z-10">{round}/{roundsCount}</h1>
-                <div className="mx-auto w-[5.5rem] py-1 bg-figma-white rounded-full mt-12">
-                    <p className="text-center font-bold text-[3.25rem] mx-auto">A</p>
+            <div className="lg:mt-12 mt-8 bg-white m-4 rounded-lg p-4">
+                <div className="flex gap-5 items-center">
+                    {firstQuestion ?
+                        <>
+                            <div className="w-[3rem] py-1 bg-figma-black rounded-full">
+                                <p className="text-center font-bold text-white text-[1.6rem] mb-[1px] mx-auto">
+                                    {AAnswers ? "A" : "B"}
+                                </p>
+                            </div>
+                            <h1 className="text-[1rem] font-bold text-figma-black relative z-10">{configData.instructionsAPlayer}</h1>
+                        </>
+                        :
+                        <div className="justify-end flex gap-3">
+                            <h1 className="text-[1rem] font-bold text-end text-figma-black relative z-10">
+                                {configData.instructionsBPlayerPre} {AAnswers ? playerData[1].name : playerData[0].name}{configData.instructionsBPlayerPost}
+                            </h1>
+                            <div className="min-w-[3rem] mt-[1px] py-1 bg-figma-black rounded-full">
+                                <p className="text-center font-bold text-white text-[1.6rem] mb-[1px] mx-auto">
+                                    {AAnswers ? "B" : "A"}
+                                </p>
+                            </div>
+                        </div>
+                    }
+
                 </div>
-                <p className="text-center mt-16 text-figma-black font-bold text-2xl">
-                    {selectedQuestions[round].question}
+                <p className="mt-6 text-figma-black font-bold text-lg text-start">
+                    {currQuestion.question}
                 </p>
+            </div>
+
+            <div className="flex flex-col mx-5">
+                {currQuestion.answers.map((answer, index) => (
+                    <label
+                        key={index}
+                        className={`flex items-center gap-2 py-3 cursor-pointer ${index !== currQuestion.answers.length - 1
+                            ? 'border-b border-figma-black' : ''}`}
+                    >
+                        <input
+                            type="radio"
+                            name="answers"
+                            value={answer}
+                            className="appearance-none h-5 w-5 border-2 border-white rounded-full checked:bg-figma-black checked:border-[5px]"
+                            onChange={e => setSelectedAnswer(e.target.value)}
+                        />
+                        <span className="font-bold text-[1rem]">{answer}</span>
+                    </label>
+                ))}
             </div>
 
 
             <div className="relative z-10 text-figma-white mb-16">
-                <button className="block mx-auto text-2xl bg-figma-black rounded-full py-2 px-7 font-bold hover:scale-110 duration-200"
+                <button
+                    className={`block mx-auto text-2xl bg-figma-black rounded-full py-2 px-7 font-bold
+                            hover:scale-110 duration-200 ${selectedAnswer === "" ? "opacity-50" : ""}`}
+                    disabled={selectedAnswer === ""}
                     onClick={() => {
+                        setCurrRoundAnswers([...currRoundAnswers, selectedAnswer]);
                         if (firstQuestion) setFirstQuestion(false);
                         else {
                             if (AAnswers) {
@@ -146,7 +267,7 @@ function Question() {
 
 function GameLoop() {
 
-    const { round } = useGame();
+    const { round, setEndGame } = useGame();
     const {
         roundStart,
         roundsCount,
@@ -155,9 +276,9 @@ function GameLoop() {
         showRoundEnd,
     } = useGameLoop();
 
-
     let content = null;
-    if (roundStart && round <= roundsCount) content = <NewRound />;
+    if (round > roundsCount) setEndGame(true);
+    if (roundStart) content = <NewRound />;
     if (showQuestion) content = <Question />;
     if (showswitchPlayers) content = <SwitchPlayers />
     if (showRoundEnd) content = <RoundEnd />

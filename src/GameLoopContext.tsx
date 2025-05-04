@@ -11,7 +11,8 @@ interface config {
     buttonNext: string;
     nowPlay: string;
     instructionsAPlayer: string;
-    instructionsBPlayer: string;
+    instructionsBPlayerPre: string;
+    instructionsBPlayerPost: string;
     passDevice: string;
     resultBothFail: string;
     resultOneFail: string;
@@ -19,6 +20,8 @@ interface config {
     textAnswer: string;
     textGuessA: string;
     textGuessB: string;
+    textSuccess: string;
+    textGameover: string;
     colorA: string;
     colorB: string;
     gameTitle: string;
@@ -118,7 +121,8 @@ interface GameLoopState {
     setFirstQuestion: Function,
     secondQuestion: boolean,
     setSecondQuestion: Function,
-
+    currRoundAnswers: string[],
+    setCurrRoundAnswers: Function,
 }
 
 interface Player {
@@ -173,6 +177,7 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [BAnswers, setBAnswers] = useState(false);
     const [firstQuestion, setFirstQuestion] = useState(true);
     const [secondQuestion, setSecondQuestion] = useState(false);
+    const [currRoundAnswers, setCurrRoundAnswers] = useState([]);
 
     return (
         <GameLoopContext.Provider value={{
@@ -195,6 +200,7 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             BAnswers, setBAnswers,
             firstQuestion, setFirstQuestion,
             secondQuestion, setSecondQuestion,
+            currRoundAnswers, setCurrRoundAnswers,
         }}>
             {children}
         </GameLoopContext.Provider>

@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useGame } from "./GameContext";
 import { useGameLoop } from "./GameLoopContext";
-import { useItemTooltip } from "@mui/x-charts";
 
 function LandingSite() {
     const { setShowLandingSite, setShowInstructions } = useGame();
