@@ -12,7 +12,7 @@ function EndScreen() {
     console.log(validTreshold);
 
     return (
-        <div className="flex flex-col justify-between min-h-screen bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
+        <div className="flex flex-col justify-between h-screen bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
             <h2 className="font-bold mt-12 text-center text-2xl text-figma-black">{configData.textGameover}</h2>
             <h1 className="font-bold text-center text-[5.17rem] text-figma-black">{successPercentage} %</h1>
             <h2 className="font-bold mt-10 text-center text-2xl text-figma-black max-w-96 mx-auto px-2">

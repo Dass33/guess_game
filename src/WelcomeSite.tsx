@@ -4,7 +4,7 @@ import { useGameLoop } from "./GameLoopContext";
 
 function LandingSite() {
     const { setShowLandingSite, setShowInstructions } = useGame();
-    const { configData, editionsData, selectedEditions } = useGameLoop();
+    const { configData, editionsData, selectedCategories } = useGameLoop();
     if (editionsData === null || configData === null) {
         return (
             <div className="bg-figma-black h-screen">
@@ -14,10 +14,10 @@ function LandingSite() {
     }
 
     return (
-        <div className="flex flex-col justify-between min-h-screen bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
+        <div className="flex flex-col justify-between h-screen bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
             <div className="flex flex-col justify-center gap-4 self-stretch font-bold text-figma-black text-center mt-48">
                 <h1 className="text-[3.33rem]">{configData.gameTitle}</h1>
-                {selectedEditions && <h2 className="text-3xl">{selectedEditions[0]}</h2>}
+                {selectedCategories && <h2 className="text-3xl">{selectedCategories[0]}</h2>}
             </div>
 
 
@@ -48,7 +48,7 @@ function InstructionSite() {
     }
 
     return (
-        <div className="flex flex-col justify-between min-h-screen text-figma-black bg-white">
+        <div className="flex flex-col justify-between h-screen text-figma-black bg-white">
             <div className="flex flex-col justify-center gap-4 self-stretch mt-20">
                 <h1 className="text-2xl font-bold text-figma-black text-center ">{configData.textTutorialHead}</h1>
             </div>
@@ -80,7 +80,7 @@ function InstructionSite() {
 
 function PickNames() {
     const { setShowPickNames, setshowPickEditions } = useGame();
-    const { configData, editionsData, setPlayerData, selectedEditions } = useGameLoop();
+    const { configData, editionsData, setPlayerData, selectedCategories } = useGameLoop();
     const playerARef = useRef<HTMLInputElement>(null);
     const playerBRef = useRef<HTMLInputElement>(null);
     const prepGame = usePrepGame();
@@ -94,7 +94,7 @@ function PickNames() {
     }
 
     return (
-        <div className="flex flex-col justify-between min-h-screen text-figma-black bg-white">
+        <div className="flex flex-col justify-between h-screen text-figma-black bg-white">
             <div className="flex flex-col justify-center gap-4 self-stretch mt-20">
                 <h1 className="text-2xl font-bold text-figma-black text-center ">{configData.pickNames}</h1>
             </div>
@@ -105,8 +105,9 @@ function PickNames() {
                 </div>
                 <input
                     ref={playerARef}
-                    className="text-center mt-8 border-figma-black w-80 border-2 py-4 rounded-lg text-figma-stone-40 font-bold text-2xl"
-                    defaultValue={configData.playerADefault}>
+                    className={`text-center mt-8 border-figma-black w-80 border-2 py-4 rounded-lg
+                            ${playerBRef.current?.value ? "text-figma-stone-40" : "text-figma-black"} font-bold text-2xl`}
+                    placeholder={configData.playerADefault}>
                 </input>
             </div>
 
@@ -116,8 +117,9 @@ function PickNames() {
                 </div>
                 <input
                     ref={playerBRef}
-                    className="text-center mt-8 border-figma-black w-80 border-2 py-4 rounded-lg text-figma-stone-40 font-bold text-2xl"
-                    defaultValue={configData.playerBDefault}>
+                    className={`text-center mt-8 border-figma-black w-80 border-2 py-4 rounded-lg
+                            ${playerBRef.current?.value ? "text-figma-stone-40" : "text-figma-black"} font-bold text-2xl`}
+                    placeholder={configData.playerBDefault}>
                 </input>
             </div>
 
@@ -128,7 +130,7 @@ function PickNames() {
                         const playerBName = playerBRef.current?.value || configData.playerBDefault;
                         setPlayerData([{ name: playerAName, points: 0 }, { name: playerBName, points: 0 }])
                         setShowPickNames(false);
-                        selectedEditions?.length || 0 > 0 ? prepGame() : setshowPickEditions(true)
+                        selectedCategories?.length || 0 > 0 ? prepGame() : setshowPickEditions(true)
                     }}>
                     {"->"} {configData.buttonNext}
                 </button>
@@ -139,7 +141,7 @@ function PickNames() {
 
 function PickEditions() {
     const { setshowPickEditions } = useGame();
-    const { configData, editionsData, selectedEditions, setSelectedEditions } = useGameLoop();
+    const { configData, editionsData, selectedCategories, setSelectedCategories } = useGameLoop();
     const prepGame = usePrepGame();
 
     if (!editionsData || !configData) {
@@ -151,28 +153,29 @@ function PickEditions() {
     }
 
     return (
-        <div className="flex flex-col justify-between min-h-screen text-figma-black bg-white">
+        <div className="flex flex-col justify-between h-screen text-figma-black bg-white">
             <div className="flex flex-col justify-center gap-4 self-stretch mt-20">
                 <h1 className="text-2xl font-bold text-figma-black text-center ">{configData.textPickTheme}</h1>
             </div>
 
             <div className="mx-auto flex flex-wrap gap-5 text-figma-black max-w-72 justify-center mt-20">
-                {editionsData
+                {configData.categories
+                    .filter(item => item.shownInStepper === 'true')
                     .map(item => {
                         return (
-                            <button key={item.editionSlug}
+                            <button key={item.categorySlug}
                                 className={`rounded-lg border-figma-black border-2 transition-transform duration-200
-                                        ${selectedEditions.includes(item.editionSlug)
+                                        ${selectedCategories.includes(item.categorySlug)
                                         ? "bg-figma-black text-white scale-110"
                                         : "bg-white scale-100"}`}
 
                                 onClick={() => {
-                                    (selectedEditions.includes(item.editionSlug))
-                                        ? setSelectedEditions(selectedEditions.filter(id => id !== item.editionSlug))
-                                        : setSelectedEditions([...selectedEditions, item.editionSlug])
+                                    (selectedCategories.includes(item.categorySlug))
+                                        ? setSelectedCategories(selectedCategories.filter(id => id !== item.categorySlug))
+                                        : setSelectedCategories([...selectedCategories, item.categorySlug])
                                 }}>
                                 <div className="p-3 font-bold text-lg">
-                                    {item.editionTitle}
+                                    {item.category}
                                 </div>
                             </button>
                         );
@@ -182,10 +185,10 @@ function PickEditions() {
             <button
                 className="font-bold text-lg text-center lg:mb-20 mb-4 w-[19.75rem] mx-auto lg:mt-32 mt-20"
                 onClick={() => {
-                    const allSelected = selectedEditions.length === editionsData.length;
-                    setSelectedEditions(allSelected ? [] : editionsData.map(item => item.editionSlug));
+                    const allSelected = selectedCategories.length === editionsData.length;
+                    setSelectedCategories(allSelected ? [] : editionsData.map(item => item.editionSlug));
                 }}>
-                {selectedEditions.length === editionsData.length
+                {selectedCategories.length === editionsData.length
                     ? configData.textClearAll
                     : configData.textPickAll}
             </button>
@@ -205,16 +208,20 @@ function PickEditions() {
 
 function usePrepGame() {
     const { setShowWelcomeSite } = useGame();
-    const { questionsData, selectedEditions, setSelectedQuestions,
+    const { questionsData, selectedCategories, setSelectedQuestions,
         configData, setRoundsCount } = useGameLoop();
 
     return () => {
-        const filteredQuestions = selectedEditions.length === 0
+        const filteredQuestions = selectedCategories.length === 0
             ? questionsData
             : questionsData.filter(item =>
-                selectedEditions.includes(item.categories[0]))
+                selectedCategories.includes(item.categories[0]))
 
-        const shuffledQuestions = filteredQuestions.sort(() => Math.random() - 0.5);
+        const shuffledQuestions = filteredQuestions
+            .sort(() => Math.random() - 0.5)
+            .map(item => ({
+                ...item, answers: item.answers.sort(() => Math.random() - 0.5)
+            }));
         setSelectedQuestions(shuffledQuestions);
         configData.roundsAmount > shuffledQuestions.length
             ? setRoundsCount(shuffledQuestions.length)
@@ -226,7 +233,7 @@ function usePrepGame() {
 function WelcomeSite() {
     const { showLandingSite, showInstructions,
         showPickEditions, showPickNames } = useGame();
-    const { editionsData, setSelectedEditions, } = useGameLoop();
+    const { editionsData, setSelectedCategories, } = useGameLoop();
     const urlParams = new URLSearchParams(window.location.search);
 
     useEffect(() => {
@@ -237,7 +244,7 @@ function WelcomeSite() {
                 edition => edition.editionSlug === urlGameMode
             );
             if (matchedEdition) {
-                setSelectedEditions(matchedEdition.editionTitle);
+                setSelectedCategories(matchedEdition.editionCategories);
             }
             // else {
             //     const filtered_questions = questionsData.filter(item => item.)

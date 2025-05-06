@@ -1,7 +1,15 @@
 import { useEffect, useState, useRef, createContext, MutableRefObject, useContext } from "react";
 import { getJsObjects } from "./fetchJson";
 
+interface category {
+    category: string;
+    categorySlug: string;
+    shownInStepper: string;
+}
+
+
 interface config {
+    categories: category[];
     textPlay: string;
     roundsAmount: number;
     copyright: string;
@@ -9,7 +17,8 @@ interface config {
     playerBDefault: string;
     pickNames: string;
     buttonNext: string;
-    nowPlay: string;
+    nowPlayPre: string;
+    nowPlayPost: string;
     instructionsAPlayer: string;
     instructionsBPlayerPre: string;
     instructionsBPlayerPost: string;
@@ -101,8 +110,8 @@ interface GameLoopState {
     setTutorial: Function,
     playerData: [Player, Player],
     setPlayerData: Function,
-    selectedEditions: string[],
-    setSelectedEditions: Function,
+    selectedCategories: string[],
+    setSelectedCategories: Function,
     selectedQuestions: question[],
     setSelectedQuestions: Function,
     roundsCount: number,
@@ -167,7 +176,7 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [roundStart, setRoundStart] = useState(true);
     const [tutorial, setTutorial] = useState(hideTutorial ? false : true);
     const [playerData, setPlayerData] = useState<[Player, Player]>([{ name: "", points: 0, }, { name: "", points: 0, }]);
-    const [selectedEditions, setSelectedEditions] = useState<string[]>([]);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [selectedQuestions, setSelectedQuestions] = useState<question[]>([]);
     const [roundsCount, setRoundsCount] = useState(0);
     const [showQuestion, setShowQuestion] = useState(false);
@@ -190,7 +199,7 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             roundStart, setRoundStart,
             tutorial, setTutorial,
             playerData, setPlayerData,
-            selectedEditions, setSelectedEditions,
+            selectedCategories, setSelectedCategories,
             selectedQuestions, setSelectedQuestions,
             roundsCount, setRoundsCount,
             showQuestion, setShowQuestion,
