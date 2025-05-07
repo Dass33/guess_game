@@ -60,11 +60,11 @@ function RoundEnd() {
     return (
         <div className="h-screen-dvh text-figma-black bg-white">
             <div className="flex flex-col justify-between h-screen-dvh mx-auto sm:w-[40rem]">
-                <div className="lg:mt-10 mt-8">
+                <div className="">
                     <p className="mx-auto text-center mt-16 text-figma-black font-bold text-2xl px-3 max-w-96">
                         {resultMessage}
                     </p>
-                    <div className="flex mt-16 items-start">
+                    <div className="flex mt-12 items-start">
                         <div className="mx-auto max-w-36">
                             <div className="mx-auto w-[3rem] py-1 bg-figma-lavender-40 rounded-full">
                                 <p className="text-center font-bold text-[1.62rem] mx-auto">A</p>
@@ -107,7 +107,7 @@ function RoundEnd() {
                 </div>
 
 
-                <div className="relative z-10 text-figma-white my-16">
+                <div className="relative z-10 text-figma-white mb-16 mt-8">
                     <button className="block mx-auto text-2xl bg-figma-black rounded-full py-2 px-7 font-bold hover:scale-110 duration-200"
                         onClick={() => {
                             setRoundStart(true);
