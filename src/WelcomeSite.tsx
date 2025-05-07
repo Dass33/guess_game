@@ -41,14 +41,14 @@ function InstructionSite() {
 
     if (!editionsData || !configData) {
         return (
-            <div className="bg-figma-white h-screen">
+            <div className="bg-figma-white h-screen-dvh">
                 <h1 className="text-center pt-36 lg:pt-56 text-white">Loading...</h1>
             </div>
         );
     }
 
     return (
-        <div className="flex flex-col justify-between h-screen text-figma-black bg-white">
+        <div className="flex flex-col justify-between h-screen-dvh text-figma-black bg-white">
             <div className="flex flex-col justify-center gap-4 self-stretch mt-20">
                 <h1 className="text-2xl font-bold text-figma-black text-center ">{configData.textTutorialHead}</h1>
             </div>
@@ -87,14 +87,14 @@ function PickNames() {
 
     if (!editionsData || !configData) {
         return (
-            <div className="bg-figma-white h-screen">
+            <div className="bg-figma-white h-screen-dvh">
                 <h1 className="text-center pt-36 lg:pt-56 text-white">Loading...</h1>
             </div>
         );
     }
 
     return (
-        <div className="flex flex-col justify-between h-screen text-figma-black bg-white">
+        <div className="flex flex-col justify-between h-screen-dvh text-figma-black bg-white">
             <div className="flex flex-col justify-center gap-4 self-stretch mt-20">
                 <h1 className="text-2xl font-bold text-figma-black text-center ">{configData.pickNames}</h1>
             </div>
@@ -146,14 +146,14 @@ function PickEditions() {
 
     if (!editionsData || !configData) {
         return (
-            <div className="bg-figma-white h-screen">
+            <div className="bg-figma-white h-screen-dvh">
                 <h1 className="text-center pt-36 lg:pt-56 text-white">Loading...</h1>
             </div>
         );
     }
 
     return (
-        <div className="flex flex-col justify-between h-screen text-figma-black bg-white">
+        <div className="flex flex-col justify-between h-screen-dvh text-figma-black bg-white">
             <div className="flex flex-col justify-center gap-4 self-stretch mt-20">
                 <h1 className="text-2xl font-bold text-figma-black text-center ">{configData.textPickTheme}</h1>
             </div>

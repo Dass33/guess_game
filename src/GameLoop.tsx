@@ -13,7 +13,7 @@ function NewRound() {
     } = useGameLoop();
 
     return (
-        <div className="flex flex-col justify-between h-screen text-figma-black bg-figma-lavender-40">
+        <div className="flex flex-col justify-between h-screen-dvh text-figma-black bg-figma-lavender-40">
             <div className="lg:mt-40 mt-28">
                 <h1 className="text-[5.16rem] text-center font-bold text-figma-black relative z-10">{round}/{roundsCount}</h1>
                 <div className="mx-auto w-[5.5rem] py-1 bg-figma-white rounded-full mt-12">
@@ -58,8 +58,8 @@ function RoundEnd() {
     }
 
     return (
-        <div className="h-screen text-figma-black bg-white">
-            <div className="flex flex-col justify-between h-screen mx-auto sm:w-[40rem]">
+        <div className="h-screen-dvh text-figma-black bg-white">
+            <div className="flex flex-col justify-between h-screen-dvh mx-auto sm:w-[40rem]">
                 <div className="lg:mt-10 mt-8">
                     <p className="mx-auto text-center mt-16 text-figma-black font-bold text-2xl px-3 max-w-96">
                         {resultMessage}
@@ -76,8 +76,8 @@ function RoundEnd() {
                                 <img className="mx-auto mt-12" src={smiley_face} alt="smiley face" />
                                 :
                                 <div className="mx-auto max-w-36">
-                                    <div className="mx-auto h-20 w-32 flex items-center justify-center text-figma-pale text-center relative px-4">
-                                        <p className="font-bold mx-auto">{a_tip}</p>
+                                    <div className="mx-auto h-20 w-32 flex items-center justify-center text-figma-pool-40 text-center relative px-4">
+                                        <p className="font-bold mx-auto">{b_tip}</p>
                                         <img className="absolute top-1/2 transform -translate-y-1/2"
                                             src={cross} alt="cross" />
                                     </div>
@@ -95,8 +95,8 @@ function RoundEnd() {
                                 <img className="mx-auto mt-12" src={smiley_face} alt="smiley face" />
                                 :
                                 <div className="mx-auto max-w-36">
-                                    <div className="mx-auto h-20 w-32 flex items-center justify-center text-figma-pool-40 text-center relative px-4">
-                                        <p className="font-bold mx-auto">{b_tip}</p>
+                                    <div className="mx-auto h-20 w-32 flex items-center justify-center text-figma-pale text-center relative px-4">
+                                        <p className="font-bold mx-auto">{a_tip}</p>
                                         <img className="absolute top-1/2 transform -translate-y-1/2"
                                             src={cross} alt="cross" />
                                     </div>
@@ -135,9 +135,9 @@ function SwitchPlayers() {
         playerData, setShowQuestion } = useGameLoop();
 
     return (
-        <div className="h-screen text-figma-black
+        <div className="h-screen-dvh text-figma-black
             bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
-            <div className="flex flex-col justify-between sm:w-[40rem] mx-auto h-screen">
+            <div className="flex flex-col justify-between sm:w-[40rem] mx-auto h-screen-dvh">
                 <div className="lg:mt-40 mt-32">
                     <div className="flex mt-12 items-center">
                         <div className="mx-auto">
@@ -195,8 +195,8 @@ function Question() {
     const currQuestion = selectedQuestions[round];
 
     return (
-        <div className={`flex flex-col justify-between h-screen text-figma-black ${bgColor}`}>
-            <div className="flex flex-col justify-between w-full lg:w-[40rem] mx-auto h-screen">
+        <div className={`flex flex-col justify-between h-screen-dvh text-figma-black ${bgColor}`}>
+            <div className="flex flex-col justify-between w-full lg:w-[40rem] mx-auto h-screen-dvh">
                 <div className="lg:mt-12 mt-8 bg-white m-4 rounded-lg p-4">
                     <div className="flex gap-5 items-center">
                         {firstQuestion ?
