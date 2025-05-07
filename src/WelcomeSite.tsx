@@ -7,14 +7,14 @@ function LandingSite() {
     const { configData, editionsData, selectedCategories } = useGameLoop();
     if (editionsData === null || configData === null) {
         return (
-            <div className="bg-figma-black h-screen">
+            <div className="bg-figma-black h-screen-dvh">
                 <h1 className="text-center pt-36 lg:pt-56 text-white">Loading...</h1>
             </div>
         );
     }
 
     return (
-        <div className="flex flex-col justify-between h-screen bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
+        <div className="flex flex-col justify-between h-screen-dvh safe-padding bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
             <div className="flex flex-col justify-center gap-4 self-stretch font-bold text-figma-black text-center mt-48">
                 <h1 className="text-[3.33rem]">{configData.gameTitle}</h1>
                 {selectedCategories && <h2 className="text-3xl">{selectedCategories[0]}</h2>}

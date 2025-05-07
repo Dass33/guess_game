@@ -54,6 +54,9 @@ export default {
             animation: {
                 "grow-shrink": "growAndShrink 0.3s ease-in-out",
             },
+            height: {
+                'screen-dvh': '100dvh',
+            }
         },
     },
     plugins: [],
