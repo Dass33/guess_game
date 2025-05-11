@@ -185,8 +185,8 @@ function PickEditions() {
             <button
                 className="font-bold text-lg text-center lg:mb-20 mb-4 w-[19.75rem] mx-auto lg:mt-32 mt-20"
                 onClick={() => {
-                    const allSelected = selectedCategories.length === editionsData.length;
-                    setSelectedCategories(allSelected ? [] : editionsData.map(item => item.editionSlug));
+                    const allSelected = selectedCategories.length === configData.categories.length;
+                    setSelectedCategories(allSelected ? [] : configData.categories.map(item => item.categorySlug));
                 }}>
                 {selectedCategories.length === editionsData.length
                     ? configData.textClearAll
