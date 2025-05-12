@@ -72,7 +72,7 @@ function RoundEnd() {
                             <p className="text-center mx-auto my-3 font-bold text-xs">{configData.textAnswer}</p>
                             <p className="font-bold text-center h-20">{a_ans}</p>
                             <p className="text-center mx-auto mt-4 mb-8 font-bold text-xs">{configData.textGuessB}</p>
-                            {a_tip === b_ans ?
+                            {a_ans === b_tip ?
                                 <img className="mx-auto mt-12" src={smiley_face} alt="smiley face" />
                                 :
                                 <div className="mx-auto max-w-36">
@@ -91,7 +91,7 @@ function RoundEnd() {
                             <p className="text-center mx-auto my-3 font-bold text-xs">{configData.textAnswer}</p>
                             <p className="font-bold text-center h-20">{b_ans}</p>
                             <p className="text-center mx-auto mt-4 mb-8 font-bold text-xs">{configData.textGuessA}</p>
-                            {a_ans === b_tip ?
+                            {a_tip === b_ans ?
                                 <img className="mx-auto mt-12" src={smiley_face} alt="smiley face" />
                                 :
                                 <div className="mx-auto max-w-36">
