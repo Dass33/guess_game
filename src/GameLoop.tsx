@@ -72,17 +72,16 @@ function RoundEnd() {
                             <p className="text-center mx-auto my-3 font-bold text-xs">{configData.textAnswer}</p>
                             <p className="font-bold text-center h-20">{a_ans}</p>
                             <p className="text-center mx-auto mt-4 mb-8 font-bold text-xs">{configData.textGuessB}</p>
-                            {a_ans === b_tip ?
-                                <img className="mx-auto mt-12" src={smiley_face} alt="smiley face" />
-                                :
-                                <div className="mx-auto max-w-36">
-                                    <div className="mx-auto h-20 w-32 flex items-center justify-center text-figma-pool-40 text-center relative px-4">
-                                        <p className="font-bold mx-auto">{b_tip}</p>
+
+                            <div className="mx-auto max-w-36">
+                                <div className="mx-auto h-20 flex items-center justify-center text-figma-pool-40 text-center relative px-4">
+                                    <p className="font-bold mx-auto">{b_tip}</p>
+                                    {a_ans != b_tip &&
                                         <img className="absolute top-1/2 transform -translate-y-1/2"
                                             src={cross} alt="cross" />
-                                    </div>
+                                    }
                                 </div>
-                            }
+                            </div>
                         </div>
                         <div className="mx-auto max-w-36">
                             <div className="mx-auto w-[3rem] py-1 bg-figma-pool-40 rounded-full">
@@ -91,17 +90,15 @@ function RoundEnd() {
                             <p className="text-center mx-auto my-3 font-bold text-xs">{configData.textAnswer}</p>
                             <p className="font-bold text-center h-20">{b_ans}</p>
                             <p className="text-center mx-auto mt-4 mb-8 font-bold text-xs">{configData.textGuessA}</p>
-                            {a_tip === b_ans ?
-                                <img className="mx-auto mt-12" src={smiley_face} alt="smiley face" />
-                                :
-                                <div className="mx-auto max-w-36">
-                                    <div className="mx-auto h-20 w-32 flex items-center justify-center text-figma-pale text-center relative px-4">
-                                        <p className="font-bold mx-auto">{a_tip}</p>
+                            <div className="mx-auto max-w-36">
+                                <div className="mx-auto h-20 flex items-center justify-center text-figma-pale text-center relative px-4">
+                                    <p className="font-bold mx-auto">{a_tip}</p>
+                                    {a_tip != b_ans &&
                                         <img className="absolute top-1/2 transform -translate-y-1/2"
                                             src={cross} alt="cross" />
-                                    </div>
+                                    }
                                 </div>
-                            }
+                            </div>
                         </div>
                     </div>
                 </div>

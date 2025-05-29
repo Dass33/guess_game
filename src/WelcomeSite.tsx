@@ -53,7 +53,7 @@ function InstructionSite() {
                 <h1 className="text-2xl font-bold text-figma-black text-center ">{configData.textTutorialHead}</h1>
             </div>
 
-            <div className="mx-auto font-bold text-[2.4375rem] flex">
+            <div className="mx-auto font-bold text-[2.4375rem] flex my-4">
                 <div className="w-[4.4rem] py-1 bg-figma-lavender-40 rounded-full">
                     <p className="text-center mx-auto">A</p>
                 </div>
@@ -62,7 +62,7 @@ function InstructionSite() {
                 </div>
             </div>
 
-            <p className="font-bold text-lg text-center mb-20 w-[19.75rem] mx-auto">
+            <p className="font-bold text-lg text-center sm:mb-8 mb-20 w-[19.75rem] mx-auto">
                 {configData.textTutorial}
             </p>
             <div className="relative z-10 text-figma-white mb-16">
@@ -158,7 +158,7 @@ function PickEditions() {
                 <h1 className="text-2xl font-bold text-figma-black text-center ">{configData.textPickTheme}</h1>
             </div>
 
-            <div className="mx-auto flex flex-wrap gap-5 text-figma-black max-w-72 justify-center mt-20">
+            <div className="mx-auto flex flex-wrap gap-5 text-figma-black max-w-72 sm:max-w-96 justify-center sm:mt-12 lg:mt-20 mt-20">
                 {configData.categories
                     .filter(item => item.shownInStepper === 'true')
                     .map(item => {
@@ -183,7 +183,7 @@ function PickEditions() {
             </div>
 
             <button
-                className="font-bold text-lg text-center lg:mb-20 mb-4 w-[19.75rem] mx-auto lg:mt-32 mt-20"
+                className="font-bold text-lg text-center xl:mb-[6.5rem] mb-4 w-[19.75rem] mx-auto lg:mt-32 mt-20 sm:mt-10"
                 onClick={() => {
                     const allSelected = selectedCategories.length === configData.categories.length;
                     setSelectedCategories(allSelected ? [] : configData.categories.map(item => item.categorySlug));
@@ -193,7 +193,7 @@ function PickEditions() {
                     : configData.textPickAll}
             </button>
 
-            <div className="relative z-10 text-figma-white mb-16">
+            <div className="relative z-10 text-figma-white mb-20">
                 <button className="block mx-auto text-2xl bg-figma-black rounded-full py-2 px-7 font-bold hover:scale-110 duration-200"
                     onClick={() => {
                         setshowPickEditions(false);
