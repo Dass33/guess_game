@@ -9,17 +9,16 @@ function EndScreen() {
     const validTreshold = tresholdData
         .filter(obj => obj.thresholdValue > treshold)
         .sort((a, b) => a.thresholdValue - b.thresholdValue)[0] || null;
-    console.log(validTreshold);
 
     return (
         <div className="flex flex-col justify-between h-screen-dvh bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
             <h2 className="font-bold mt-12 text-center text-2xl text-figma-black">{configData.textGameover}</h2>
             <h1 className="font-bold text-center text-[5.17rem] text-figma-black">{successPercentage} %</h1>
-            <h2 className="font-bold mt-10 text-center text-2xl text-figma-black max-w-96 mx-auto px-2">
+            <h2 className="font-bold mt-10 sm:mt-4 lg:mt-12 text-center text-2xl text-figma-black max-w-96 mx-auto px-2">
                 {validTreshold.thresholdTexts[1]}
             </h2>
 
-            <div className="flex mt-12 items-center sm:mx-auto sm:gap-32">
+            <div className="flex mt-12 sm:mt-4 lg:mt-12 items-center sm:mx-auto sm:gap-32">
                 <div className="mx-auto">
                     <p className="text-center mx-auto mb-3 font-bold text-xl">{playerData[0].name}</p>
                     <div className="mx-auto w-[3rem] py-1 bg-figma-white rounded-full">
