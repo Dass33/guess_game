@@ -143,6 +143,7 @@ function PickEditions() {
     const { setshowPickEditions } = useGame();
     const { configData, editionsData, selectedCategories, setSelectedCategories } = useGameLoop();
     const prepGame = usePrepGame();
+    const categoriesInStepper = configData.categories.filter(item => item.shownInStepper === 'true');
 
     if (!editionsData || !configData) {
         return (
@@ -159,27 +160,25 @@ function PickEditions() {
             </div>
 
             <div className="mx-auto flex flex-wrap gap-5 text-figma-black max-w-72 sm:max-w-96 justify-center sm:mt-12 lg:mt-20 mt-20">
-                {configData.categories
-                    .filter(item => item.shownInStepper === 'true')
-                    .map(item => {
-                        return (
-                            <button key={item.categorySlug}
-                                className={`rounded-lg border-figma-black border-2 transition-transform duration-200
+                {categoriesInStepper.map(item => {
+                    return (
+                        <button key={item.categorySlug}
+                            className={`rounded-lg border-figma-black border-2 transition-transform duration-200
                                         ${selectedCategories.includes(item.categorySlug)
-                                        ? "bg-figma-black text-white scale-110"
-                                        : "bg-white scale-100"}`}
+                                    ? "bg-figma-black text-white scale-110"
+                                    : "bg-white scale-100"}`}
 
-                                onClick={() => {
-                                    (selectedCategories.includes(item.categorySlug))
-                                        ? setSelectedCategories(selectedCategories.filter(id => id !== item.categorySlug))
-                                        : setSelectedCategories([...selectedCategories, item.categorySlug])
-                                }}>
-                                <div className="p-3 font-bold text-lg">
-                                    {item.category}
-                                </div>
-                            </button>
-                        );
-                    })}
+                            onClick={() => {
+                                (selectedCategories.includes(item.categorySlug))
+                                    ? setSelectedCategories(selectedCategories.filter(id => id !== item.categorySlug))
+                                    : setSelectedCategories([...selectedCategories, item.categorySlug])
+                            }}>
+                            <div className="p-3 font-bold text-lg">
+                                {item.category}
+                            </div>
+                        </button>
+                    );
+                })}
             </div>
 
             <button
@@ -188,7 +187,7 @@ function PickEditions() {
                     const allSelected = selectedCategories.length === configData.categories.length;
                     setSelectedCategories(allSelected ? [] : configData.categories.map(item => item.categorySlug));
                 }}>
-                {selectedCategories.length === editionsData.length
+                {selectedCategories.length === categoriesInStepper.length
                     ? configData.textClearAll
                     : configData.textPickAll}
             </button>

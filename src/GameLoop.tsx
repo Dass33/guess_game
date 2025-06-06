@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useGame } from "./GameContext";
 import { useGameLoop } from "./GameLoopContext";
-import smiley_face from "../src/assets/smiley_face.svg"
 import cross from "../src/assets/cross.svg"
 
 
