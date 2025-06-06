@@ -18,7 +18,7 @@ function EndScreen() {
                 {validTreshold.thresholdTexts[1]}
             </h2>
 
-            <div className="flex mt-12 sm:mt-4 lg:mt-12 items-center mx-auto sm:gap-32">
+            <div className="flex mt-12 sm:mt-4 lg:mt-12 items-center mx-auto gap-6 sm:gap-32">
                 <div className="mx-auto">
                     <p className="text-center mx-auto mb-3 font-bold text-xl">{playerData[0].name}</p>
                     <div className="mx-auto w-[3rem] py-1 bg-figma-white rounded-full">
@@ -38,7 +38,7 @@ function EndScreen() {
             </div>
 
 
-            <div className="relative z-10 text-figma-white mb-16">
+            <div className="relative z-10 text-figma-white mb-16 mt-4">
                 <button className="block mx-auto text-xl bg-figma-black rounded-full py-2 px-7 font-bold hover:scale-110 duration-200"
                     onClick={() => {
                         const url = new URL(window.location.href);
