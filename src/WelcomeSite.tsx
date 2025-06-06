@@ -141,9 +141,15 @@ function PickNames() {
 
 function PickEditions() {
     const { setshowPickEditions } = useGame();
-    const { configData, editionsData, selectedCategories, setSelectedCategories } = useGameLoop();
+    const { configData, editionsData, selectedCategories, setSelectedCategories, questionsData } = useGameLoop();
     const prepGame = usePrepGame();
-    const categoriesInStepper = configData.categories.filter(item => item.shownInStepper === 'true');
+    const validCategories = configData.categories.filter(item => {
+        if (item.shownInStepper !== 'true') return false;
+        const questionsInCategory = questionsData.filter(question =>
+            question.categories && question.categories[0] === item.categorySlug
+        );
+        return questionsInCategory.length >= 5;
+    });
 
     if (!editionsData || !configData) {
         return (
@@ -160,7 +166,7 @@ function PickEditions() {
             </div>
 
             <div className="mx-auto flex flex-wrap gap-5 text-figma-black max-w-72 sm:max-w-96 justify-center sm:mt-12 lg:mt-20 mt-20">
-                {categoriesInStepper.map(item => {
+                {validCategories.map(item => {
                     return (
                         <button key={item.categorySlug}
                             className={`rounded-lg border-figma-black border-2 transition-transform duration-200
@@ -187,7 +193,7 @@ function PickEditions() {
                     const allSelected = selectedCategories.length === configData.categories.length;
                     setSelectedCategories(allSelected ? [] : configData.categories.map(item => item.categorySlug));
                 }}>
-                {selectedCategories.length === categoriesInStepper.length
+                {selectedCategories.length === validCategories.length
                     ? configData.textClearAll
                     : configData.textPickAll}
             </button>
