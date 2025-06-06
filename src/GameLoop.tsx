@@ -237,7 +237,7 @@ function Question() {
                                 name="answers"
                                 value={answer}
                                 checked={selectedAnswer === answer}
-                                className="appearance-none h-5 w-5 border-2 border-white rounded-full checked:bg-figma-black checked:border-[5px]"
+                                className="appearance-none w-5 h-5 min-w-[20px] min-h-[20px] border-2 border-white rounded-full checked:bg-figma-black checked:border-[5px] flex-shrink-0"
                                 onChange={e => setSelectedAnswer(e.target.value)}
                             />
                             <span className="font-bold text-[1rem]">{answer}</span>

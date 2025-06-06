@@ -18,7 +18,7 @@ function EndScreen() {
                 {validTreshold.thresholdTexts[1]}
             </h2>
 
-            <div className="flex mt-12 sm:mt-4 lg:mt-12 items-center sm:mx-auto sm:gap-32">
+            <div className="flex mt-12 sm:mt-4 lg:mt-12 items-center mx-auto sm:gap-32">
                 <div className="mx-auto">
                     <p className="text-center mx-auto mb-3 font-bold text-xl">{playerData[0].name}</p>
                     <div className="mx-auto w-[3rem] py-1 bg-figma-white rounded-full">
