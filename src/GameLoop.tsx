@@ -117,7 +117,9 @@ function RoundEnd() {
                             if (round + 1 > roundsCount) setEndGame(true);
                             setRound(round + 1);
                         }}>
-                        {"->"} {configData.buttonNextRound}
+                        {"->"} {round < roundsCount
+                            ? configData.buttonNextRound
+                            : configData.resultsText}
                     </button>
                 </div>
             </div>

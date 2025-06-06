@@ -78,6 +78,7 @@ interface config {
     textLastRound: string;
     attentionFlash: number;
     prettyURL: string;
+    resultsText: string;
 }
 
 interface edition {
@@ -187,7 +188,6 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [firstQuestion, setFirstQuestion] = useState(true);
     const [secondQuestion, setSecondQuestion] = useState(false);
     const [currRoundAnswers, setCurrRoundAnswers] = useState([]);
-    console.log(editionsData);
 
     return (
         <GameLoopContext.Provider value={{
