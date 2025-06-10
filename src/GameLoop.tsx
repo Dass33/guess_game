@@ -186,7 +186,7 @@ function Question() {
         setCurrRoundAnswers, currRoundAnswers,
     } = useGameLoop();
     const [selectedAnswer, setSelectedAnswer] = useState("");
-    const bgColor = (AAnswers && firstQuestion) || (!AAnswers && !firstQuestion)
+    const bgColor = AAnswers
         ? "bg-figma-lavender-40"
         : "bg-figma-pool-40";
 
