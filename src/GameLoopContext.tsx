@@ -79,6 +79,8 @@ interface config {
     attentionFlash: number;
     prettyURL: string;
     resultsText: string;
+    authorsTitle: string;
+    authorsText: string;
 }
 
 interface edition {

@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useGame } from "./GameContext";
 import { useGameLoop } from "./GameLoopContext";
+import info from "../src/assets/info.svg"
+import bold_cross from "../src/assets/bold_cross.svg"
 
 function LandingSite() {
-    const { setShowLandingSite, setShowInstructions } = useGame();
+    const { setShowLandingSite, setShowInstructions, setShowAuthors } = useGame();
     const { configData, editionsData, selectedCategories } = useGameLoop();
     if (editionsData === null || configData === null) {
         return (
@@ -15,6 +17,13 @@ function LandingSite() {
 
     return (
         <div className="flex flex-col justify-center h-screen-dvh safe-padding bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
+            <button className="fixed top-0 right-0"
+                onClick={() => {
+                    setShowAuthors(true)
+                    setShowLandingSite(false);
+                }}>
+                <img className="m-2" src={info} alt="authors" />
+            </button>
             <div className="flex flex-col justify-between h-screen-dvh max-h-[50rem]">
                 <div className="flex flex-col justify-center gap-4 self-stretch font-bold text-figma-black text-center mt-48">
                     <h1 className="text-[3.33rem]">{configData.gameTitle}</h1>
@@ -243,9 +252,32 @@ function usePrepGame() {
     }
 }
 
+function Authors() {
+    const { setShowAuthors, setShowLandingSite } = useGame();
+    const { configData } = useGameLoop();
+    const authors = configData.authorsText.split(',');
+    return (
+        <div className="flex flex-col justify-center items-center text-center min-h-screen relative">
+            <button
+                className="absolute size-7 right-5 top-1"
+                onClick={() => {
+                    setShowLandingSite(true);
+                    setShowAuthors(false);
+                }}>
+                <img className="m-2" src={bold_cross} alt="authors" />
+            </button>
+            <h1 className="font-bold text-xl">{configData.authorsTitle}</h1>
+            {authors.map((item, index) => (
+                <h2 key={index} className="mt-4 text-lg">{item}</h2>
+            ))}
+        </div>
+    )
+}
+
 function WelcomeSite() {
     const { showLandingSite, showInstructions,
-        showPickEditions, showPickNames } = useGame();
+        showPickEditions, showPickNames,
+        showAuthors } = useGame();
     const { editionsData, setSelectedCategories, } = useGameLoop();
     const urlParams = new URLSearchParams(window.location.search);
 
@@ -267,6 +299,7 @@ function WelcomeSite() {
 
     return (
         <>
+            {showAuthors && <Authors />}
             {showLandingSite && <LandingSite />}
             {showInstructions && <InstructionSite />}
             {showPickNames && <PickNames />}

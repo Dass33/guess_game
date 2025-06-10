@@ -15,6 +15,8 @@ interface GameState {
     setShowPickNames: Function,
     showPickEditions: boolean,
     setshowPickEditions: Function,
+    showAuthors: boolean,
+    setShowAuthors: Function,
 }
 
 const GameContext = createContext<GameState | undefined>(undefined);
@@ -27,6 +29,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [showInstructions, setShowInstructions] = useState(false);
     const [showPickNames, setShowPickNames] = useState(false);
     const [showPickEditions, setshowPickEditions] = useState(false);
+    const [showAuthors, setShowAuthors] = useState(false);
 
     return (
         <GameContext.Provider value={{
@@ -36,7 +39,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
             showLandingSite, setShowLandingSite,
             showInstructions, setShowInstructions,
             showPickNames, setShowPickNames,
-            showPickEditions, setshowPickEditions
+            showPickEditions, setshowPickEditions,
+            showAuthors, setShowAuthors,
         }}>
             {children}
         </GameContext.Provider>
