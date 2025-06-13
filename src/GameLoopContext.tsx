@@ -86,7 +86,7 @@ interface config {
 interface edition {
     editionTitle: string,
     editionSlug: string,
-    isSorted: boolean,
+    isSorted: string,
     editionCategories: string[],
 }
 

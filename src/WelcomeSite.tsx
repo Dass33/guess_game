@@ -241,9 +241,10 @@ function usePrepGame() {
                 item.categories && selectedCategories.some(selectedCat =>
                     item.categories.includes(selectedCat)));
 
-        if (currentEdition?.isSorted) {
+        if (currentEdition?.isSorted === "TRUE") {
             const sortedQuestions = filteredQuestions.sort((a, b) => a.id - b.id);
             setSelectedQuestions(sortedQuestions);
+            setRoundsCount(filteredQuestions.length)
         }
         else {
             const shuffledQuestions = filteredQuestions
@@ -252,11 +253,11 @@ function usePrepGame() {
                     ...item, answers: item.answers.sort(() => Math.random() - 0.5)
                 }));
             setSelectedQuestions(shuffledQuestions);
+            configData.roundsAmount > filteredQuestions.length
+                ? setRoundsCount(filteredQuestions.length)
+                : setRoundsCount(configData.roundsAmount);
         }
 
-        configData.roundsAmount > filteredQuestions.length
-            ? setRoundsCount(filteredQuestions.length)
-            : setRoundsCount(configData.roundsAmount);
         setShowWelcomeSite(false);
     }
 }
