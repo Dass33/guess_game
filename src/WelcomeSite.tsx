@@ -6,7 +6,8 @@ import bold_cross from "../src/assets/bold_cross.svg"
 
 function LandingSite() {
     const { setShowLandingSite, setShowInstructions, setShowAuthors } = useGame();
-    const { configData, editionsData, selectedCategories } = useGameLoop();
+    const { configData, editionsData, selectedCategories, currentEdition } = useGameLoop();
+
     if (editionsData === null || configData === null) {
         return (
             <div className="bg-figma-black h-screen-dvh">
@@ -27,7 +28,7 @@ function LandingSite() {
             <div className="flex flex-col justify-between h-screen-dvh max-h-[50rem]">
                 <div className="flex flex-col justify-center gap-4 self-stretch font-bold text-figma-black text-center mt-48">
                     <h1 className="text-[3.33rem]">{configData.gameTitle}</h1>
-                    {selectedCategories && <h2 className="text-3xl">{selectedCategories[0]}</h2>}
+                    {selectedCategories && <h2 className="text-3xl">{currentEdition?.editionTitle}</h2>}
                 </div>
 
 
@@ -161,7 +162,7 @@ function PickEditions() {
     const validCategories = configData.categories.filter(item => {
         if (item.shownInStepper !== 'true') return false;
         const questionsInCategory = questionsData.filter(question =>
-            question.categories && question.categories[0] === item.categorySlug
+            question.categories && question.categories.includes(item.categorySlug)
         );
         return questionsInCategory.length >= 5;
     });
@@ -231,22 +232,30 @@ function PickEditions() {
 function usePrepGame() {
     const { setShowWelcomeSite } = useGame();
     const { questionsData, selectedCategories, setSelectedQuestions,
-        configData, setRoundsCount } = useGameLoop();
+        configData, setRoundsCount, currentEdition } = useGameLoop();
 
     return () => {
         const filteredQuestions = selectedCategories.length === 0
             ? questionsData
             : questionsData.filter(item =>
-                selectedCategories.includes(item.categories[0]))
+                item.categories && selectedCategories.some(selectedCat =>
+                    item.categories.includes(selectedCat)));
 
-        const shuffledQuestions = filteredQuestions
-            .sort(() => Math.random() - 0.5)
-            .map(item => ({
-                ...item, answers: item.answers.sort(() => Math.random() - 0.5)
-            }));
-        setSelectedQuestions(shuffledQuestions);
-        configData.roundsAmount > shuffledQuestions.length
-            ? setRoundsCount(shuffledQuestions.length)
+        if (currentEdition?.isSorted) {
+            const sortedQuestions = filteredQuestions.sort((a, b) => a.id - b.id);
+            setSelectedQuestions(sortedQuestions);
+        }
+        else {
+            const shuffledQuestions = filteredQuestions
+                .sort(() => Math.random() - 0.5)
+                .map(item => ({
+                    ...item, answers: item.answers.sort(() => Math.random() - 0.5)
+                }));
+            setSelectedQuestions(shuffledQuestions);
+        }
+
+        configData.roundsAmount > filteredQuestions.length
+            ? setRoundsCount(filteredQuestions.length)
             : setRoundsCount(configData.roundsAmount);
         setShowWelcomeSite(false);
     }
@@ -278,7 +287,7 @@ function WelcomeSite() {
     const { showLandingSite, showInstructions,
         showPickEditions, showPickNames,
         showAuthors } = useGame();
-    const { editionsData, setSelectedCategories, } = useGameLoop();
+    const { editionsData, setSelectedCategories, setCurrentEdition } = useGameLoop();
     const urlParams = new URLSearchParams(window.location.search);
 
     useEffect(() => {
@@ -290,6 +299,7 @@ function WelcomeSite() {
             );
             if (matchedEdition) {
                 setSelectedCategories(matchedEdition.editionCategories);
+                setCurrentEdition(matchedEdition);
             }
             // else {
             //     const filtered_questions = questionsData.filter(item => item.)

@@ -86,11 +86,13 @@ interface config {
 interface edition {
     editionTitle: string,
     editionSlug: string,
+    isSorted: boolean,
     editionCategories: string[],
 }
 
 interface question {
     question: string,
+    id: number,
     categories: string,
     answers: [string, string, string, string, string],
 }
@@ -135,6 +137,8 @@ interface GameLoopState {
     setSecondQuestion: Function,
     currRoundAnswers: string[],
     setCurrRoundAnswers: Function,
+    currentEdition: edition | undefined,
+    setCurrentEdition: Function,
 }
 
 interface Player {
@@ -190,6 +194,7 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [firstQuestion, setFirstQuestion] = useState(true);
     const [secondQuestion, setSecondQuestion] = useState(false);
     const [currRoundAnswers, setCurrRoundAnswers] = useState([]);
+    const [currentEdition, setCurrentEdition] = useState();
 
     return (
         <GameLoopContext.Provider value={{
@@ -213,6 +218,7 @@ export const GameLoopProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             firstQuestion, setFirstQuestion,
             secondQuestion, setSecondQuestion,
             currRoundAnswers, setCurrRoundAnswers,
+            currentEdition, setCurrentEdition,
         }}>
             {children}
         </GameLoopContext.Provider>

@@ -192,7 +192,7 @@ function Question() {
         ? "bg-figma-lavender-40"
         : "bg-figma-pool-40";
 
-    const currQuestion = selectedQuestions[round];
+    const currQuestion = selectedQuestions[round - 1];
 
     return (
         <div className={`flex flex-col justify-center h-screen-dvh text-figma-black ${bgColor}`}>
