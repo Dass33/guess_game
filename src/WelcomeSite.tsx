@@ -160,7 +160,7 @@ function PickEditions() {
     const { configData, editionsData, selectedCategories, setSelectedCategories, questionsData } = useGameLoop();
     const prepGame = usePrepGame();
     const validCategories = configData.categories.filter(item => {
-        if (item.shownInStepper !== 'true') return false;
+        if (item.shownInStepper !== 'TRUE') return false;
         const questionsInCategory = questionsData.filter(question =>
             question.categories && question.categories.includes(item.categorySlug)
         );
