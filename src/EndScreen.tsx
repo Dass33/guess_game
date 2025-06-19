@@ -14,7 +14,7 @@ function EndScreen() {
         <div className="flex flex-col justify-center h-screen-dvh bg-gradient-to-r from-figma-lavender-40 to-figma-pool-40">
             <div className="flex flex-col justify-between h-screen-dvh max-h-[50rem]">
                 <h2 className="font-bold mt-12 text-center text-2xl text-figma-black">{configData.textGameover}</h2>
-                <h1 className="font-bold text-center text-[5.17rem] text-figma-black">{successPercentage} %</h1>
+                <h1 className="font-bold text-center text-[5.17rem] text-figma-black">{successPercentage.toFixed(2)} %</h1>
                 <h2 className="font-bold mt-10 sm:mt-4 lg:mt-12 text-center text-2xl text-figma-black max-w-96 mx-auto px-2">
                     {validTreshold.thresholdTexts[1]}
                 </h2>
