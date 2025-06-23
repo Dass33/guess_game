@@ -6,7 +6,7 @@ export async function getJsObjects() {
     }
 
     // Otherwise, fetch the data
-    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRk3QRWtJWFDCEtM-SEXBXBWU1iZJWSw27u6FYTjBR6oi6G3PDBjfQfFKTxE9v3N3PcfuXtmdaE10ni/pub?gid=684094629&single=true&output=tsv';
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_W_0tu-IvmSVS15-gxgAJ0Na11mUTKKsA1_SYE8RvEI9EJABuboTdUlmF-YbhEbdURRy2LvQVGeVH/pub?gid=684094629&single=true&output=tsv';
 
     const response = await fetch(url);
 
