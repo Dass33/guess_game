@@ -92,7 +92,7 @@ function RoundEnd() {
                             <p className="font-bold text-center h-20">{b_ans}</p>
                             <p className="text-center mx-auto mt-4 mb-8 font-bold text-xs">{configData.textGuessA}</p>
                             <div className="mx-auto max-w-36">
-                                <div className="mx-auto h-20 flex items-center justify-center text-figma-pale text-center relative px-4">
+                                <div className="mx-auto h-20 flex items-center justify-center text-figma-lavender-40 text-center relative px-4">
                                     <p className="font-bold mx-auto">{a_tip}</p>
                                     {a_tip != b_ans &&
                                         <img className="absolute top-1/2 transform -translate-y-1/2"
