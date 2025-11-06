@@ -269,7 +269,7 @@ function Authors() {
     return (
         <div className="flex flex-col justify-center items-center text-center min-h-screen relative">
             <button
-                className="absolute size-7 md:right-3 right-1 md:top-3 top-1 flex items-center justify-center"
+                className="absolute size-7 md:right-3 right-2 md:top-3 top-2 flex items-center justify-center"
                 onClick={() => {
                     setShowLandingSite(true);
                     setShowAuthors(false);
