@@ -269,12 +269,12 @@ function Authors() {
     return (
         <div className="flex flex-col justify-center items-center text-center min-h-screen relative">
             <button
-                className="absolute size-7 right-5 top-1"
+                className="absolute size-7 md:right-3 right-1 md:top-3 top-1 flex items-center justify-center"
                 onClick={() => {
                     setShowLandingSite(true);
                     setShowAuthors(false);
                 }}>
-                <img className="m-2" src={bold_cross} alt="authors" />
+                <img className="size-5" src={bold_cross} alt="authors" />
             </button>
             <h1 className="font-bold text-xl">{configData.authorsTitle}</h1>
             {authors.map((item, index) => (
